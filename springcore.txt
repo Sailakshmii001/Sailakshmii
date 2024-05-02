@@ -1,0 +1,114 @@
+App.java
+package Ch16.project2;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+//       ApplicationContext context=new AnnotationConfigApplicationContext(Myfile.class);
+//      System.out.println(context.getBean(student.class));
+//      System.out.println(context.getBean(teacher.class));
+      ApplicationContext context1=new ClassPathXmlApplicationContext("config.xml");
+      System.out.println(context1.getBean(student.class));
+      System.out.println(context1.getBean(teacher.class));
+      
+    }
+}
+--------------------------------------------------------------------------------------
+Myfile.java
+package Ch16.project2;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+@Configuration
+public class Myfile {
+@Bean
+public student s()
+{
+	student s = new student("Sahithi","f",89);
+	return s;
+			
+}
+@Bean
+@Primary
+public teacher t()
+{
+	teacher t = new teacher("jaya","maths",101);
+	return t;
+}
+}
+-----------------------------------------------------------------------------------
+student.java
+package Ch16.project2;
+
+public class student {
+String name;
+String gender;
+int marks;
+public student(String name, String gender, int marks) {
+	super();
+	this.name = name;
+	this.gender = gender;
+	this.marks = marks;
+}
+@Override
+public String toString() {
+	return "student [name=" + name + ", gender=" + gender + ", marks=" + marks + "]";
+}
+
+
+}
+---------------------------------------------------------------------------------------------
+teacher.java
+package Ch16.project2;
+
+public class teacher {
+String name;
+String subject;
+int id;
+public teacher(String name, String subject, int id) {
+	super();
+	this.name = name;
+	this.subject = subject;
+	this.id = id;
+}
+@Override
+public String toString() {
+	return "teacher [name=" + name + ", subject=" + subject + ", id=" + id + "]";
+}
+}
+------------------------------------------------------------------------------------
+config.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+xmlns:context="http://www.springframework.org/schema/context"  
+xmlns:p="http://www.springframework.org/schema/p"  
+xmlns:tx="http://www.springframework.org/schema/tx"  
+xsi:schemaLocation="http://www.springframework.org/schema/beans  
+http://www.springframework.org/schema/beans/spring-beans.xsd  
+http://www.springframework.org/schema/context  
+http://www.springframework.org/schema/context/spring-context.xsd  
+http://www.springframework.org/schema/tx  
+http://www.springframework.org/schema/tx/spring-tx.xsd">
+<bean id="student" class="Ch16.project2.student">
+ <constructor-arg value="sai"></constructor-arg>
+<constructor-arg value="f"></constructor-arg>
+<constructor-arg value="89"></constructor-arg>
+</bean>
+<bean id="teacher" class="Ch16.project2.teacher">
+ <constructor-arg value="sahithi"></constructor-arg>
+<constructor-arg value="maths"></constructor-arg>
+<constructor-arg value="2"></constructor-arg>
+</bean>
+</beans>
